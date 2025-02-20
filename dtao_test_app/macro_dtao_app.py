@@ -206,7 +206,7 @@ if not df.empty:
     zoom = alt.selection_interval(bind="scales")  
 
     # Enable hover interaction
-    hover = alt.selection_point(
+    hover = alt.selection_single(
         nearest=True, on="mouseover", fields=["BLOCK"], empty="none"
     )
 
@@ -223,7 +223,7 @@ if not df.empty:
         tooltip=["BLOCK", "CHANGE", "SUBNET","VALUE"]
     ).properties(
         width=900, height=500
-    ).add_params(zoom) 
+    ).add_selection(zoom) 
 
     # Add hover effect - Circles on hovered points
     points = alt.Chart(df).mark_circle(size=80).encode(
@@ -237,10 +237,10 @@ if not df.empty:
     selectors = alt.Chart(df).mark_rule().encode(
         x="BLOCK:O",
         opacity=alt.condition(hover, alt.value(0.3), alt.value(0))
-    ).add_params(hover)
+    ).add_selection(hover)
 
     # Combine all elements 
-    chart = alt.layer(line, selectors, points).add_params(zoom)
+    chart = alt.layer(line, selectors, points).add_selection(zoom)
 
     st.altair_chart(chart, use_container_width=True)
 
@@ -251,5 +251,5 @@ for i in range(REFRESH_PARAM):
     wait_message.write(f"Refreshing in {REFRESH_PARAM - i} seconds")  
     time.sleep(1)  # Wait for 1 second
 
-st.rerun()  # Forces Streamlit to update
+st.experimental_rerun()  # Forces Streamlit to update
 
