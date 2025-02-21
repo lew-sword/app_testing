@@ -1,6 +1,0 @@
-[theme]
-primaryColor='#ff4b4b'  # Customize button color
-backgroundColor='#333'  # Dark background
-secondaryBackgroundColor='#1e1e1e' # Darker sidebar
-textColor='white'  # Text color for better visibility
-font='sans serif'  # Font style
