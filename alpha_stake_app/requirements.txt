@@ -1,0 +1,5 @@
+pandas>=2.0
+altair==4.2.2
+async-substrate-interface==1.0.3
+bittensor==9.0.0
+streamlit

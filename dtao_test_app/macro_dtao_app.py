@@ -10,57 +10,32 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 st.set_page_config(layout="wide", page_title="Macrocosmos dTao App", page_icon="logo_files/logo.png", initial_sidebar_state="collapsed")
 
-#Logos and title
-col1, col2, col3 = st.columns([1, 3, 1])  # Adjust width proportions
 
-with col1:
-    st.markdown(
-        """
-        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <iframe src="https://lunar.macrocosmos.ai/iframe.html?globals=backgrounds.value%3A!hex(333)%3Bbackgrounds.grid%3A!false%3Btheme%3Adark&args=&id=logospinner--dark-large&viewMode=story"
-                    width="300" height="150" style="border: none;"></iframe>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+# Centered title with flexbox for vertical alignment
+st.markdown(
+"""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-with col2:
-    # Centered title with flexbox for vertical alignment
-    st.markdown(
-    """
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+    .orbitron-title {
+        font-family: "Orbitron", sans-serif !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        margin: 0;
+        letter-spacing: 2px;
+        color: #4CAF50;
+    }
+</style>
 
-        .orbitron-title {
-            font-family: "Orbitron", sans-serif !important;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-align: center;
-            margin: 0;
-            letter-spacing: 2px;
-            color: #4CAF50;
-        }
-    </style>
-
-    <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-        <h1 class="orbitron-title">
-            Macrocosmos dTao App
-        </h1>
-    </div>
-    """,
-    unsafe_allow_html=True
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    <h1 class="orbitron-title">
+        Macrocosmos dTao App
+    </h1>
+</div>
+""",
+unsafe_allow_html=True
 )
-
-with col3:
-    st.markdown(
-        """
-        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <iframe src="https://lunar.macrocosmos.ai/iframe.html?globals=backgrounds.value%3A!hex(333)%3Bbackgrounds.grid%3A!false%3Btheme%3Adark&args=&id=logospinner--dark-large&viewMode=story"
-                    width="300" height="150" style="border: none;"></iframe>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
 
 
 # Choose number of blocks and feature to display (e.g., emission, alpha_out, etc.). Must be from DynamicInfo and Balance object
