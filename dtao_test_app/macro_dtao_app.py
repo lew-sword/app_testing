@@ -8,7 +8,7 @@ import websockets
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-st.set_page_config(layout="wide", page_title="Macrocosmos dTao App", page_icon="logo_files/logo.png", initial_sidebar_state="collapsed")
+st.set_page_config(layout="centered", page_title="Macrocosmos dTao App", page_icon="logo_files/logo.png", initial_sidebar_state="collapsed")
 
 
 # Centered title with flexbox for vertical alignment
@@ -168,12 +168,7 @@ for netuid, records in st.session_state.block_data.items():
 df = pd.concat(df_list) if df_list else pd.DataFrame(columns=["SYMBOL","SUBNET", "BLOCK", "VALUE", "CHANGE"])
 
 # Display the data in expander objects
-st.write(f"### Previous `{FEATURE_NAME}` values for selected subnets")
-
-for netuid in df["SUBNET"].unique():
-    with st.expander(f"Subnet {netuid} Data"):
-        subnet_df = df[df["SUBNET"] == netuid].sort_values("BLOCK", ascending=False)
-        st.dataframe(subnet_df.drop(columns="SUBNET"), use_container_width=True)
+st.write(f"### Previous `{FEATURE_NAME}` values percentage change for selected subnets")
 
 # Plotting dataframe results as line charts
 if not df.empty:
@@ -196,9 +191,7 @@ if not df.empty:
         y=alt.Y("CHANGE:Q", title="Percentage Change (%)", scale=y_scale),
         color=alt.Color("SUBNET:N", title="Subnet", scale=alt.Scale(scheme="category10")),
         tooltip=["BLOCK", "CHANGE", "SUBNET","VALUE"]
-    ).properties(
-        width=900, height=500
-    ).add_selection(zoom) 
+    ).properties().add_selection(zoom) 
 
     # Add hover effect - Circles on hovered points
     points = alt.Chart(df).mark_circle(size=80).encode(
@@ -218,6 +211,13 @@ if not df.empty:
     chart = alt.layer(line, selectors, points).add_selection(zoom)
 
     st.altair_chart(chart, use_container_width=True)
+
+
+for netuid in df["SUBNET"].unique():
+    with st.expander(f"Subnet {netuid} Data"):
+        subnet_df = df[df["SUBNET"] == netuid].sort_values("BLOCK", ascending=False)
+        st.dataframe(subnet_df.drop(columns="SUBNET"), use_container_width=True)
+
 
 # Sleep and rerun settings
 wait_message = st.empty()
