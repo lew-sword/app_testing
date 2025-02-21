@@ -29,7 +29,7 @@ st.markdown(
 
 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
     <h1 class="orbitron-title">
-        Subnet Alpha Stake App
+        Macrocosmos Subnet Alpha Stake App
     </h1>
 </div>
 """,
@@ -103,7 +103,9 @@ class SubnetAnalyzer:
         df.reset_index(inplace=True)
         # Rename index column to 'UID'
         df.rename(columns={"index": "UID", "stake": "Stake", "coldkey": "Coldkey", "v_permit": "V_Permit", "macro_vali": "Macro Vali" }, inplace=True)
-
+        
+        # Sort by 'Stake' in descending order
+        df = df.sort_values(by="Stake", ascending=False)
         return df
     
 
@@ -111,7 +113,7 @@ class SubnetAnalyzer:
         """Display stake data in Streamlit."""
         df = self.to_dataframe()
         st.write(f"### Stake data for subnet {self.subnet} at block `{self.current_block}`")
-        st.dataframe(df.set_index("UID"))
+        st.dataframe(df.set_index("UID"), use_container_width=True)
 
 
 # Initialize subtensor connection\
