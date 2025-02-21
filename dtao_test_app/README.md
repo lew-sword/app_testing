@@ -2,8 +2,7 @@
 A lightweight app that can be used to demonstrate how python code can be displayed using streamlit
 
 ## Installation 
-- Download the `config.toml`, `macro_dtao_app.py` and `requirements.txt` files, and save to a directory.
-- Open that directory in terminal and then run 
+- Open the repo directory in terminal and then run 
 
     `python -m venv .venv`
 
