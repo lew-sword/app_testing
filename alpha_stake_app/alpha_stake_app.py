@@ -57,7 +57,6 @@ class SubnetAnalyzer:
         if self.metagraph is None:
             raise ValueError(f"Subnet {self.subnet} does not exist.")
     
-
     def get_macro_owner_key(self)->List[str]:
         if self.subnet == 1:
             return ["5HCFWvRqzSHWRPecN7q8J6c7aKQnrCZTMHstPv39xL1wgDHh"]
@@ -71,19 +70,18 @@ class SubnetAnalyzer:
             return ["5DXqqdrvu5FK3dASRVTCdGPZKx4Q9nkAZZSmibKG6PEEeW4j"]
         else:
             return ["non_macrocosmos_key"]
-
-
+        
     def get_macro_vali_key(self)->List[str]:
         if self.subnet == 1:
-            return ["5FRXwb2qsEhqDQQKcm5m2MF26xTWwW65MHTEtKFFydypuqjG"]
+            return [st.secrets["keys"]["main_vali_key"]]
         elif self.subnet == 9:
-            return ["5FRXwb2qsEhqDQQKcm5m2MF26xTWwW65MHTEtKFFydypuqjG", "5HBtpwxuGNL1gwzwomwR7sjwUt8WXYSuWcLYN6f9KpTZkP4k"]
+            return [st.secrets["keys"]["main_vali_key"], st.secrets["keys"]["sn9_other_key"]]
         elif self.subnet == 13:
-            return ["5FRXwb2qsEhqDQQKcm5m2MF26xTWwW65MHTEtKFFydypuqjG"]
+            return [st.secrets["keys"]["main_vali_key"]]
         elif self.subnet == 25:
-            return ["5FRXwb2qsEhqDQQKcm5m2MF26xTWwW65MHTEtKFFydypuqjG"]
+            return [st.secrets["keys"]["main_vali_key"]]
         elif self.subnet == 37:
-            return ["5HQWSRrS4sjxwgf9EQKG7arRHE2WqMTcMap2QZJWsvQFXfQK"]
+            return [st.secrets["keys"]["sn37_key"]]
         else:
             return ["non_macrocosmos_key"]
 
@@ -117,7 +115,7 @@ class SubnetAnalyzer:
             stake_data_for_uid = self.get_alpha_data_by_uid(uid)
             uid_stake_dict[uid] = {"alpha_stake": stake_data_for_uid[1], #gets staked alpha
                                    "stake": stake_data_for_uid[2], #gets total stake
-                                   "coldkey": self.metagraph.coldkeys[uid],
+                                   "coldkey": self.metagraph.coldkeys[uid] if self.metagraph.coldkeys[uid] not in macro_vali_keys else "Macro_Validator", # shield coldkey
                                    "v_permit": self.metagraph.validator_permit[uid], 
                                    "macro_vali": 1 if self.metagraph.coldkeys[uid] in macro_vali_keys else 0,
                                    "macro_owner": 1 if self.metagraph.coldkeys[uid] in self.get_macro_owner_key() else 0}
