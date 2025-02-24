@@ -5,7 +5,7 @@ import pandas as pd
 import time
 import altair as alt
 import logging
-import websockets
+import gc
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -88,13 +88,13 @@ class SubnetAnalyzer:
     def get_owner_uids(self):
         """Return active UIDs and their corresponding coldkeys."""
         active_uids = [i for i in range(len(self.metagraph.active)) if self.metagraph.coldkeys[i]== self.get_macro_owner_key()[0]]
-        logging.info(f"Owner UIDs for subnet {self.subnet}: {active_uids}")
+        # logging.info(f"Owner UIDs for subnet {self.subnet}: {active_uids}")
         return active_uids
 
     def get_active_uids(self):
         """Return active UIDs and their corresponding coldkeys."""
         active_uids = [i for i in range(len(self.metagraph.active)) if self.metagraph.active[i]]
-        logging.info(f"Active UIDs for subnet {self.subnet}: {active_uids}")
+        # logging.info(f"Active UIDs for subnet {self.subnet}: {active_uids}")
         return active_uids
 
     def get_alpha_data_by_uid(self, uid: int):
@@ -147,7 +147,7 @@ class SubnetAnalyzer:
 
 
 # Initialize subtensor connection\
-REFRESH_PARAM = 30
+REFRESH_PARAM = 60
 NETWORK = "finney"
 MAX_RETRIES = 5
 INITIAL_WAIT = 2
@@ -249,5 +249,6 @@ for i in range(REFRESH_PARAM):
     wait_message.write(f"Refreshing in {REFRESH_PARAM - i} seconds")  
     time.sleep(1)  # Wait for 1 second
 
+gc.collect()
 st.experimental_rerun()  # Forces Streamlit to update
 
